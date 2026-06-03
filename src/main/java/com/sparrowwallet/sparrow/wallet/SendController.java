@@ -622,7 +622,7 @@ public class SendController extends WalletFormController implements Initializabl
                 TransactionParameters params = new TransactionParameters(getUtxoSelectors(payments), getTxoFilters(),
                         payments, opReturnsList, excludedChangeNodes,
                         feeRate, getMinimumFeeRate(), minRelayFeeRate, userFee,
-                        currentBlockHeight, groupByAddress, includeMempoolOutputs, allowRbf);
+                        currentBlockHeight, groupByAddress, includeMempoolOutputs, allowRbf, false);
                 walletTransactionService = new WalletTransactionService(wallet, params, replacedTransaction);
                 walletTransactionService.setOnSucceeded(event -> {
                     if(!walletTransactionService.isIgnoreResult()) {
@@ -1238,7 +1238,7 @@ public class SendController extends WalletFormController implements Initializabl
             boolean includeMempoolOutputs = Config.get().isIncludeMempoolOutputs();
 
             TransactionParameters params = new TransactionParameters(utxoSelectors, getTxoFilters(), walletTransaction.getPayments(), List.of(blindedPaymentCode),
-                    excludedChangeNodes, feeRate, getMinimumFeeRate(), minRelayFeeRate, userFee, currentBlockHeight, groupByAddress, includeMempoolOutputs, true);
+                    excludedChangeNodes, feeRate, getMinimumFeeRate(), minRelayFeeRate, userFee, currentBlockHeight, groupByAddress, includeMempoolOutputs, true, false);
             WalletTransaction finalWalletTx = decryptedWallet.createWalletTransaction(params);
             PSBT psbt = finalWalletTx.createPSBT();
             decryptedWallet.sign(psbt);
